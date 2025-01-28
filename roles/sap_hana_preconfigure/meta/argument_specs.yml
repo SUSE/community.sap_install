@@ -80,6 +80,7 @@ argument_specs:
         choices:
           - 'fedora.linux_system_roles'
           - 'redhat.rhel_system_roles'
+          - 'suse.linux_system_roles'
         required: false
         type: str
 
