@@ -57,4 +57,4 @@
       sap_ha_pacemaker_cluster_aws_credentials_setup is not defined or it is not true.
 
       Please ensure that your instances have IAM Role or Instance Profile attached, per AWS documentation
-      You can ignore this message if provisioning was completed using community.sap_infrastructure.
+      You can ignore this message if provisioning was completed using suse.sap_infrastructure.

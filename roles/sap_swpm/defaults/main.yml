@@ -451,4 +451,4 @@ sap_swpm_update_etchosts: false
 sap_swpm_display_unattended_output: false
 
 # Set which Ansible Collection to use when calling sap_install roles.
-sap_swpm_sap_install_collection: 'community.sap_install'
+sap_swpm_sap_install_collection: 'suse.sap_install'

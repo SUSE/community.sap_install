@@ -1,7 +1,5 @@
 # community.sap_install Ansible Collection
 
-![Ansible Lint](https://github.com/sap-linuxlab/community.sap_install/actions/workflows/ansible-lint.yml/badge.svg?branch=main)
-
 ## Description
 
 This Ansible Collection executes various SAP Software installations and configuration tasks for various SAP solutions and deployment scenarios on supported Linux operating systems.

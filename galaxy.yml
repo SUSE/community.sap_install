@@ -5,7 +5,7 @@
 # The namespace of the collection. This can be a company/brand/organization or product namespace under which all
 # content lives. May only contain alphanumeric lowercase characters and underscores. Namespaces cannot start with
 # underscores or numbers and cannot contain consecutive underscores
-namespace: community
+namespace: suse
 
 # The name of the collection. Has the same character restrictions as 'namespace'
 name: sap_install
@@ -18,15 +18,7 @@ readme: README.md
 
 # A list of the collection's content authors. Can be just the name or in the format 'Full Name <email> (url)
 authors:
-  - Bernd Finger <bfinger(at)redhat.com>
-  - Sean Freeman <sean.freeman(at)uk.ibm.com>
-  - Rainer Leber <rainer.leber(at)sva.de>
-  - Markus Koch <mkoch(at)redhat.com>
-  - Markus Moster <mmoster(at)redhat.com>
-  - Janine Fuchs <jfuchs(at)redhat.com>
-  - Steven Stringer <steven.stringer(at)suse.com>
-  - Marcel Mamula <marcel.mamula(at)suse.com>
-  - Gabriele Puliti <gabriele.puliti(at)suse.com>
+  - SUSE
 
 ### OPTIONAL but strongly recommended
 # A short summary description of the collection
@@ -55,19 +47,32 @@ tags:
 dependencies: {}
 
 # The URL of the originating SCM repository
-repository: https://github.com/sap-linuxlab/community.sap_install
+repository: https://github.com/SUSE/community.sap_install
 
 # The URL to any online docs
-documentation: https://github.com/sap-linuxlab/sap-linuxlab.github.io/blob/master/README.md
+documentation: https://github.com/SUSE/community.sap_install/blob/main/README.md
 
 # The URL to the homepage of the collection/project
 homepage: https://sap-linuxlab.github.io
 
 # The URL to the collection issue tracker
-issues: https://github.com/sap-linuxlab/community.sap_install/issues
+issues: https://github.com/SUSE/community.sap_install/issues
 
 # A list of file glob-like patterns used to filter any files or directories that should not be included in the build
 # artifact. A pattern is matched from the relative path of the file or directory of the collection directory. This
 # uses 'fnmatch' to match the files or directories. Some directories and files like 'galaxy.yml', '*.pyc', '*.retry',
 # and '.git' are always filtered
-build_ignore: ['tests', 'internal-*']
+build_ignore:
+  - tests
+  - roles/*/tests
+  - .git*
+  - roles/.git*
+  - roles/*/.git*
+  - .ansible-lint
+  - roles/*/.ansible-lint
+  - .yamllint*
+  - roles/*/.yamllint*
+  - bindep*
+  - .pre-commit-config.yaml
+  - .pylintrc
+  - workflows
