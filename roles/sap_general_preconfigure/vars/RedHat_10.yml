@@ -55,7 +55,6 @@ __sap_general_preconfigure_packagegroups: "{{ lookup('vars', '__sap_general_prec
 
 __sap_general_preconfigure_packages_x86_64:
   - uuidd
-  - libnsl
   - tcsh
   - psmisc
   - nfs-utils
@@ -64,7 +63,7 @@ __sap_general_preconfigure_packages_x86_64:
   - hostname
 # package tuned: no longer part of package group "Core" in RHEL 10, so we have to install it
   - tuned
-# package libxcrypt-compat: needed by sapstartsrv and SAP HANA on RHEL 10:
+# package libxcrypt-compat: needed by sapstartsrv on RHEL 10:
   - libxcrypt-compat
 # English locale packages are required as per SAP note 2369910:
   - langpacks-en
@@ -72,7 +71,6 @@ __sap_general_preconfigure_packages_x86_64:
 
 __sap_general_preconfigure_packages_ppc64le:
   - uuidd
-  - libnsl
   - tcsh
   - psmisc
   - nfs-utils
@@ -81,7 +79,7 @@ __sap_general_preconfigure_packages_ppc64le:
   - hostname
 # package tuned: no longer part of package group "Core" in RHEL 10, so we have to install it
   - tuned
-# package libxcrypt-compat: needed by sapstartsrv and SAP HANA on RHEL 10:
+# package libxcrypt-compat: needed by sapstartsrv on RHEL 10:
   - libxcrypt-compat
 # English locale packages are required as per SAP note 2369910:
   - langpacks-en
@@ -89,7 +87,6 @@ __sap_general_preconfigure_packages_ppc64le:
 
 __sap_general_preconfigure_packages_s390x:
   - uuidd
-  - libnsl
   - tcsh
   - psmisc
   - nfs-utils
