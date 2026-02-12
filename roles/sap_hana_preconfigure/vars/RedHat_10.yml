@@ -2,7 +2,8 @@
 ---
 
 # supported RHEL 10 minor releases for SAP HANA:
-__sap_hana_preconfigure_supported_rhel_minor_releases: []
+__sap_hana_preconfigure_supported_rhel_minor_releases:
+  - "10.0"
 
 # required repos for RHEL 10:
 __sap_hana_preconfigure_req_repos_redhat_10_0_x86_64:
@@ -106,14 +107,14 @@ __sap_hana_preconfigure_req_repos_redhat_10_9_ppc64le:
   - "rhel-10-for-ppc64le-sap-solutions-rpms"
 
 __sap_hana_preconfigure_req_repos_redhat_10_10_x86_64:
-  - "rhel-10-for-x86_64-baseos-e4s-rpms"
-  - "rhel-10-for-x86_64-appstream-e4s-rpms"
-  - "rhel-10-for-x86_64-sap-solutions-e4s-rpms"
+  - "rhel-10-for-x86_64-baseos-rpms"
+  - "rhel-10-for-x86_64-appstream-rpms"
+  - "rhel-10-for-x86_64-sap-solutions-rpms"
 
 __sap_hana_preconfigure_req_repos_redhat_10_10_ppc64le:
-  - "rhel-10-for-ppc64le-baseos-e4s-rpms"
-  - "rhel-10-for-ppc64le-appstream-e4s-rpms"
-  - "rhel-10-for-ppc64le-sap-solutions-e4s-rpms"
+  - "rhel-10-for-ppc64le-baseos-rpms"
+  - "rhel-10-for-ppc64le-appstream-rpms"
+  - "rhel-10-for-ppc64le-sap-solutions-rpms"
 
 # required SAP notes for RHEL 10:
 __sap_hana_preconfigure_sapnotes_versions_x86_64:
@@ -135,9 +136,11 @@ __sap_hana_preconfigure_sapnotes_versions: "{{ lookup('vars', '__sap_hana_precon
 # variable __sap_hana_preconfigure_min_pkgs will be undefined as well.
 
 # Minimum required package levels for RHEL 10.0:
-__sap_hana_preconfigure_min_packages_10_0_x86_64: []
+__sap_hana_preconfigure_min_packages_10_0_x86_64:
+  - [ 'kernel', '6.12.0-55.30.1.el10_0' ]
 
-__sap_hana_preconfigure_min_packages_10_0_ppc64le: []
+__sap_hana_preconfigure_min_packages_10_0_ppc64le:
+  - [ 'kernel', '6.12.0-55.30.1.el10_0' ]
 
 __sap_hana_preconfigure_min_packages_10_1_x86_64: []
 
@@ -182,58 +185,34 @@ __sap_hana_preconfigure_min_packages_10_10_ppc64le: []
 __sap_hana_preconfigure_min_pkgs: "{{ lookup('vars', '__sap_hana_preconfigure_min_packages_' + ansible_distribution_version | string | replace(\".\", \"_\") + '_' + ansible_architecture) }}"
 
 __sap_hana_preconfigure_packages:
-# SAP NOTE 3108316:
-  - expect
-# package gtk3: only needed if the SAP HANA installation tools hdblcmgui and hdbsetup are used
-  - gtk3
-  - krb5-workstation
-  - libatomic
-  - libcanberra-gtk3
-  - libtool-ltdl
-  - numactl
-  - PackageKit-gtk3-module
-  - xorg-x11-xauth
-# package chkconfig: needed by hdblcm to be able to access /etc/init.d
-  - chkconfig
-# package libxcrypt-compat: needed SAP HANA and also by sapstartsrv on RHEL 10:
-#  - libxcrypt-compat       # now installed by role sap_general_preconfigure, see also SAP note 3108316, version 4.
-# For support purposes:
-# package graphwiz: graph visualization tools, for supportability)
-  - graphviz
-# package iptraf-ng: TCP/IP network monitor, for supportability)
-  - iptraf-ng
-# package lm-sensors: TCP/IP network monitor, for supportability)
-  - lm_sensors
-# package nfs-utils: support utilities for NFS, for supportability)
-  - nfs-utils
-# SAP NOTE 3562919:
+# SAP NOTE 3562909:
   - tuned-profiles-sap-hana
-
-__sap_hana_preconfigure_packages_min_install:
-# SAP NOTE 3108316:
-  - expect
 # package gtk3: only needed if the SAP HANA installation tools hdblcmgui and hdbsetup are used
 #  - gtk3
-  - krb5-workstation
+#  - libcanberra-gtk3
+#  - PackageKit-gtk3-module
+#  - krb5-workstation
   - libatomic
-  - libcanberra-gtk3
   - libtool-ltdl
   - numactl
-  - PackageKit-gtk3-module
-  - xorg-x11-xauth
-# package libxcrypt-compat: needed SAP HANA and also by sapstartsrv on RHEL 10:
-#  - libxcrypt-compat       # now installed by role sap_general_preconfigure, see also SAP note 3108316, version 4.
-# For support purposes:
-# package graphwiz: graph visualization tools, for supportability)
-#  - graphviz
-# package iptraf-ng: TCP/IP network monitor, for supportability)
-#  - iptraf-ng
-# package lm-sensors: TCP/IP network monitor, for supportability)
-#  - lm_sensors
-# package nfs-utils: support utilities for NFS, for supportability)
-#  - nfs-utils
-# SAP NOTE 3562919:
+#  - xorg-x11-xauth
+# package chkconfig: needed by hdblcm to be able to access /etc/init.d
+  - chkconfig
+
+__sap_hana_preconfigure_packages_min_install:
+# SAP NOTE 3562909:
   - tuned-profiles-sap-hana
+# package gtk3: only needed if the SAP HANA installation tools hdblcmgui and hdbsetup are used
+#  - gtk3
+#  - libcanberra-gtk3
+#  - PackageKit-gtk3-module
+#  - krb5-workstation
+  - libatomic
+  - libtool-ltdl
+  - numactl
+#  - xorg-x11-xauth
+# package chkconfig: needed by hdblcm to be able to access /etc/init.d
+  - chkconfig
 
 # URL for the IBM Power Systems service and productivity tools, see https://www.ibm.com/support/pages/service-and-productivity-tools
 __sap_hana_preconfigure_ibm_power_repo_url: 'https://public.dhe.ibm.com/software/server/POWER/Linux/yum/download/ibm-power-repo-latest.noarch.rpm'
@@ -302,6 +281,6 @@ __sap_hana_preconfigure_boot_command_line_args:
 # SAP NOTE 3562919:
 # RHEL 10.0 and later:
   c-states: { arch: ['x86_64'],            args: ['processor.max_cstate=1', 'intel_idle.max_cstate=1'] }
-  tsx:      { arch: ['x86_64'],            args: ['tsx=on'] }
+  tsx:      { arch: ['x86_64'],            args: ['tsx=auto'] }
   thp:      { arch: ['x86_64', 'ppc64le'], args: ['transparent_hugepage=madvise'] }
 # yamllint enable rule:commas rule:colons

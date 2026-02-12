@@ -26,6 +26,7 @@ Install required collections by `ansible-galaxy collection install -vv -r meta/c
 ## Prerequisites
 
 (Red Hat specific) Ensure system is installed according to:
+
 - RHEL 8: SAP note 2772999, Red Hat Enterprise Linux 8.x: Installation and Configuration, section `Installing Red Hat Enterprise Linux 8`.
 - RHEL 9: SAP note 3108316, Red Hat Enterprise Linux 9.x: Installation and Configuration, section `Installing Red Hat Enterprise Linux 9`.
 
@@ -64,7 +65,9 @@ Further referenced as `example.yml`
 
 <!-- BEGIN Role Tags -->
 ### Role Tags
+
 With the following tags, the role can be called to perform certain activities only:
+
 - tag `sap_general_preconfigure_installation`: Perform only the installation tasks
 - tag `sap_general_preconfigure_configuration`: Perform only the configuration tasks
 - tag `sap_general_preconfigure_3108316`: Perform only the tasks(s) related to this SAP note.
@@ -72,44 +75,42 @@ With the following tags, the role can be called to perform certain activities on
 - tag `sap_general_preconfigure_etc_hosts`: Perform only the tasks(s) related to this step. This step might be one of multiple
   configuration activities of a SAP note. Also this step might be valid for multiple RHEL major releases.
 
-<details>
-  <summary><b>How to run sap_general_preconfigure with tags</b></summary>
+#### How to run sap_general_preconfigure with tags
 
-  #### Perform only installation tasks:
-  ```console
-  ansible-playbook sap.yml --tags=sap_general_preconfigure_installation
-  ```
+Perform only installation tasks:
+```console
+ansible-playbook sap.yml --tags=sap_general_preconfigure_installation
+```
 
-  #### Perform only configuration tasks:
-  ```console
-  ansible-playbook sap.yml --tags=sap_general_preconfigure_configuration
-  ```
+Perform only configuration tasks:
+```console
+ansible-playbook sap.yml --tags=sap_general_preconfigure_configuration
+```
 
-  #### Verify and modify /etc/hosts file:
-  ```console
-  ansible-playbook sap.yml --tags=sap_general_preconfigure_etc_hosts
-  ```
+Verify and modify /etc/hosts file:
+```console
+ansible-playbook sap.yml --tags=sap_general_preconfigure_etc_hosts
+```
 
-  #### Perform all configuration steps except verifying and modifying the /etc/hosts file
-  ```
-  ansible-playbook sap.yml --tags=sap_general_preconfigure_configuration --skip_tags=sap_general_preconfigure_etc_hosts
-  ```
+Perform all configuration steps except verifying and modifying the /etc/hosts file
+```
+ansible-playbook sap.yml --tags=sap_general_preconfigure_configuration --skip_tags=sap_general_preconfigure_etc_hosts
+```
 
-  #### (Red Hat) Perform configuration activities related to SAP note 3108316 (RHEL 9)
-  ```
-  ansible-playbook sap.yml --tags=sap_general_preconfigure_3108316
-  ```
+(Red Hat) Perform configuration activities related to SAP note 3108316 (RHEL 9)
+```
+ansible-playbook sap.yml --tags=sap_general_preconfigure_3108316
+```
 
-  #### (Red Hat) Perform configuration activities related to step 2 (SELinux settings) of SAP note 3108316 (RHEL 9)
-  ```
-  ansible-playbook sap.yml --tags=sap_general_preconfigure_3108316_02
-  ```
+(Red Hat) Perform configuration activities related to step 2 (SELinux settings) of SAP note 3108316 (RHEL 9)
+```
+ansible-playbook sap.yml --tags=sap_general_preconfigure_3108316_02
+```
 
-  #### (Red Hat) Perform all configuration activities except those related to step 2 (SELinux settings) of SAP note 3108316 (RHEL 9 specific)
-  ```
-  ansible-playbook sap-general-preconfigure.yml --tags=sap_general_preconfigure_configuration --skip_tags=sap_general_preconfigure_3108316_02
-  ```
-</details>
+(Red Hat) Perform all configuration activities except those related to step 2 (SELinux settings) of SAP note 3108316 (RHEL 9 specific)
+```
+ansible-playbook sap-general-preconfigure.yml --tags=sap_general_preconfigure_configuration --skip_tags=sap_general_preconfigure_3108316_02
+```
 <!-- END Role Tags -->
 
 <!-- BEGIN Further Information -->
@@ -345,7 +346,7 @@ If `sap_general_preconfigure_reboot_ok` is set to `false`, which is the default,
 remain unnoticed. For this reason, we let the role fail. Set this parameter to `false` to override this behavior.<br>
 Can be useful if you want to implement your own reboot handling.<br>
 
-### sap_general_preconfigure_selinux_state
+### sap_general_preconfigure_selinux_mode
 - _Type:_ `str`
 - _Default:_ `'permissive'`
 - _Possible Values:_<br>
@@ -353,7 +354,19 @@ Can be useful if you want to implement your own reboot handling.<br>
   - `permissive`
   - `disabled`
 
-One of the SELinux states to be set on the system.<br>
+One of the three SELinux modes to be set on the system.<br>
+Note: A transition from `disabled` to `enforcing` is not supported, see the `Using SELinux` RHEL product documentation<br>
+and Red Hat Bug 2021835.<br>
+
+### sap_general_preconfigure_fail_if_selinux_mode_lowered
+- _Type:_ `bool`
+- _Default:_ `true`
+
+If the system is running with a higher SELinux mode than demanded by the<br>
+variable `sap_general_preconfigure_selinux_mode`, we let the role fail in order to avoid an<br>
+unintentional configuration change to a lower SELinux security level.<br>
+Set this variable to `false` if you want the role to change the SELinux mode from `enforcing`<br>
+to `permissive` or `disabled`, or from `permissive` to `disabled`<br>
 
 ### sap_general_preconfigure_create_directories
 - _Type:_ `bool`
